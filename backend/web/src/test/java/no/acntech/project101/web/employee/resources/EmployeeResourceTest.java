@@ -10,6 +10,8 @@ import no.acntech.project101.employee.service.EmployeeService;
 import no.acntech.project101.web.employee.resources.EmployeeDto;
 import no.acntech.project101.web.employee.resources.EmployeeResource;
 
+import no.acntech.project101.web.employee.resources.converter.EmployeeConverter;
+import no.acntech.project101.web.employee.resources.converter.EmployeeDtoConverter;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,6 +30,7 @@ import java.util.Optional;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.lenient;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
@@ -47,6 +50,11 @@ class EmployeeResourceTest {
     @MockBean
     private CompanyService companyService;
 
+    @MockBean
+    EmployeeDtoConverter employeeDtoConverter;
+
+    @MockBean
+    EmployeeConverter employeeConverter;
     @Test
     void findAll() throws Exception {
         final Company company = new Company("ACME", "123456789");
@@ -84,6 +92,7 @@ class EmployeeResourceTest {
 
         lenient().when(employeeService.save(any(Employee.class))).thenReturn(ken);
         lenient().when(companyService.findById(anyLong())).thenReturn(Optional.of(company));
+        when(employeeConverter.convert(any())).thenReturn(new Employee(employeeDto.getFirstName(), employeeDto.getLastName(), employeeDto.getDateOfBirth()));
 
         mockMvc.perform(MockMvcRequestBuilders
                 .post("/employees")

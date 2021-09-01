@@ -38,5 +38,5 @@ the mapping will ManyToOne (tip: google that to figure out how the mapping can b
 * The resource needs to look up the company based on the id and set it on the Employee entity before saving. 
 
 #### If you still have time
-* Create a new endpoint, either in company og in employee that does something you want it to do. Only your imagination can stop you
+* Create a new endpoint, either in company or in employee that does something you want it to do. Only your imagination can stop you
 

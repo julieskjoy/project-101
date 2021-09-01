@@ -1,12 +1,14 @@
 package no.acntech.project101.company;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import no.acntech.project101.employee.Employee;
+import org.hibernate.mapping.Set;
+
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
+@Table(name = "COMPANY")
 public class Company {
 
     @Id
@@ -21,6 +23,8 @@ public class Company {
 
 
     //TODO add mapping for list of employees if you have time
+    @OneToMany(mappedBy = "company")
+    private List<Employee> employees = new ArrayList<Employee>();
 
     public Company() {
     }
